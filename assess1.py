@@ -11,12 +11,20 @@ def get_database_connection():
 def read_from_database():
     connection = get_database_connection()
     cur=connection.cursor()
-    cur.execute('SELECT * FROM view_contacts;')
+    cur.execute('SELECT * FROM contacts;')
     rows = cur.fetchall()
     cur.close()
     connection.close()
     for item in rows:
         print(item)
+
+def insert_contact(first_name, last_name, title, organization):
+    connection = get_database_connection()
+    cur = connection.cursor()
+    cur.execute(f"INSERT INTO contacts (first_name, last_name, title, organization) VALUES  ('{first_name}', '{last_name}', '{title}', '{organization}');")
+    cur.close()
+    connection.commit()
+    connection.close()
 
 def main():
     print('Welcome to the contacts list!\nAvailable commands are LIST, INSERT, DELETE, QUIT')
@@ -28,5 +36,11 @@ def main():
         elif cmd == 'QUIT':
             print('Goodbye!')
             break
+        elif cmd == 'INSERT':
+            first_name = input('Enter first name: ')
+            last_name = input('Enter last name: ')
+            title = input('Enter title: ')
+            organization = input('Enter organization: ')
+            insert_contact(first_name, last_name, title, organization)
 
 main()
