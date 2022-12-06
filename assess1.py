@@ -25,6 +25,16 @@ def insert_contact(first_name, last_name, title, organization):
     cur.close()
     connection.commit()
     connection.close()
+    print(f'{first_name} {last_name} inserted')
+
+def delete_contact(first_name, last_name):
+    connection = get_database_connection()
+    cur = connection.cursor()
+    cur.execute(f"DELETE FROM contacts WHERE first_name='{first_name}' AND last_name ='{last_name}';")
+    cur.close()
+    connection.commit()
+    connection.close()
+    print(f'{first_name} {last_name} deleted')
 
 def main():
     print('Welcome to the contacts list!\nAvailable commands are LIST, INSERT, DELETE, QUIT')
@@ -42,5 +52,10 @@ def main():
             title = input('Enter title: ')
             organization = input('Enter organization: ')
             insert_contact(first_name, last_name, title, organization)
+        elif cmd == 'DELETE':
+            first_name = input('Enter first name: ')
+            last_name = input('Enter last name: ')
+            delete_contact(first_name, last_name)
+
 
 main()
