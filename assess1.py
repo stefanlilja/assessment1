@@ -19,6 +19,14 @@ def read_from_database():
         print(item)
 
 def main():
-    read_from_database()
+    print('Welcome to the contacts list!\nAvailable commands are LIST, INSERT, DELETE, QUIT')
+    while True:
+        cmd = input('Insert command: ').upper()
+
+        if cmd == 'LIST':
+            read_from_database()
+        elif cmd == 'QUIT':
+            print('Goodbye!')
+            break
 
 main()
